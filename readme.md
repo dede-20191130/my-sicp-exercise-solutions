@@ -3,9 +3,14 @@
 Here are SICP Textbook's exercise solutions with test codes which I have worked on and made.  
 The repository is on-going.
 
+## ENVIRONMENT AND USED TOOLS
+
+The environment in which these problems were solved is Racket v8.5.  
+Drracket greatly helped me creating codes and testing them.
+
 ## SORRY FOR SOME MISSING EXERCISES
 
-I apologize for the missing answers to some of the exercises. Before I started Exercise 2-73, I had used [https://replit.com/~](https://replit.com/) and BiwaScheme. Since it enabled me to solve the problems online, I did not leave codes of solution.
+I apologize for the missing answers to some of the exercises. Before I started Exercise 2-73, I had used [https://replit.com](https://replit.com/) and BiwaScheme. Since it enabled me to solve the problems online, I did not leave codes of solution.
 
 ## ADDITIONALLY
 
