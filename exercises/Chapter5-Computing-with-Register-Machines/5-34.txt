@@ -1,0 +1,103 @@
+'((assign val (op make-compiled-procedure) (label entry1) (reg env))
+  (goto (label after-lambda2))
+  entry1
+  (assign env (op compiled-procedure-env) (reg proc))
+  (assign env (op extend-environment) (const (n)) (reg argl) (reg env))
+  (assign val (op make-compiled-procedure) (label entry3) (reg env))
+  (goto (label after-lambda4))
+  entry3
+  (assign env (op compiled-procedure-env) (reg proc))
+  (assign env (op extend-environment) (const (product counter)) (reg argl) (reg env))
+  (save continue) ;1st save of entry3 (lambda of 'iter'); current depth:1
+  (save env) ;2nd save of entry3;  current depth:2
+  (assign proc (op lookup-variable-value) (const >) (reg env))
+  (assign val (op lookup-variable-value) (const n) (reg env))
+  (assign argl (op list) (reg val))
+  (assign val (op lookup-variable-value) (const counter) (reg env))
+  (assign argl (op cons) (reg val) (reg argl))
+  (test (op primitive-procedure?) (reg proc))
+  (branch (label primitive-branch8))
+  compiled-branch9
+  (assign continue (label after-call10))
+  (assign val (op compiled-procedure-entry) (reg proc))
+  (goto (reg val))
+  primitive-branch8
+  (assign val (op apply-primitive-procedure) (reg proc) (reg argl))
+  after-call10
+  (restore env) ;1st restore of entry3;  current depth:1
+  (restore continue) ;2nd restore of entry3;  current depth:0
+  (test (op false?) (reg val))
+  (branch (label false-branch6))
+  true-branch5
+  (assign val (op lookup-variable-value) (const product) (reg env))
+  (goto (reg continue))
+  false-branch6
+  (assign proc (op lookup-variable-value) (const iter) (reg env))
+  (save continue) ;3rd save of entry3;  current depth:1
+  (save proc) ;4th save of entry3;  current depth:2
+  (save env) ;5th save of entry3;  current depth:3
+  (assign proc (op lookup-variable-value) (const +) (reg env))
+  (assign val (const 1))
+  (assign argl (op list) (reg val))
+  (assign val (op lookup-variable-value) (const counter) (reg env))
+  (assign argl (op cons) (reg val) (reg argl))
+  (test (op primitive-procedure?) (reg proc))
+  (branch (label primitive-branch14))
+  compiled-branch15
+  (assign continue (label after-call16))
+  (assign val (op compiled-procedure-entry) (reg proc))
+  (goto (reg val))
+  primitive-branch14
+  (assign val (op apply-primitive-procedure) (reg proc) (reg argl))
+  after-call16
+  (assign argl (op list) (reg val))
+  (restore env) ;3rd save of entry3;  current depth:2
+  (save argl) ;6th save of entry3;  current depth:3
+  (assign proc (op lookup-variable-value) (const *) (reg env))
+  (assign val (op lookup-variable-value) (const product) (reg env))
+  (assign argl (op list) (reg val))
+  (assign val (op lookup-variable-value) (const counter) (reg env))
+  (assign argl (op cons) (reg val) (reg argl))
+  (test (op primitive-procedure?) (reg proc))
+  (branch (label primitive-branch11))
+  compiled-branch12
+  (assign continue (label after-call13))
+  (assign val (op compiled-procedure-entry) (reg proc))
+  (goto (reg val))
+  primitive-branch11
+  (assign val (op apply-primitive-procedure) (reg proc) (reg argl))
+  after-call13
+  (restore argl) ;4th restore of entry3;  current depth:2
+  (assign argl (op cons) (reg val) (reg argl))
+  (restore proc) ;5th restore of entry3;  current depth:1
+  (restore continue) ;6th restore of entry3;  current depth:0
+  (test (op primitive-procedure?) (reg proc))
+  (branch (label primitive-branch17))
+  compiled-branch18
+  (assign val (op compiled-procedure-entry) (reg proc))
+  (goto (reg val)) ;jump into next iteration, and because current stack depth in the body of iter proc. is 0, whole iteration process runs in constant stack space.
+  primitive-branch17
+  (assign val (op apply-primitive-procedure) (reg proc) (reg argl))
+  (goto (reg continue))
+  after-call19
+  after-if7
+  after-lambda4
+  (perform (op define-variable!) (const iter) (reg val) (reg env))
+  (assign val (const ok))
+  (assign proc (op lookup-variable-value) (const iter) (reg env))
+  (assign val (const 1))
+  (assign argl (op list) (reg val))
+  (assign val (const 1))
+  (assign argl (op cons) (reg val) (reg argl))
+  (test (op primitive-procedure?) (reg proc))
+  (branch (label primitive-branch20))
+  compiled-branch21
+  (assign val (op compiled-procedure-entry) (reg proc))
+  (goto (reg val))
+  primitive-branch20
+  (assign val (op apply-primitive-procedure) (reg proc) (reg argl))
+  (goto (reg continue))
+  after-call22
+  after-lambda2
+  (perform (op define-variable!) (const factorial) (reg val) (reg env))
+  (assign val (const ok)))

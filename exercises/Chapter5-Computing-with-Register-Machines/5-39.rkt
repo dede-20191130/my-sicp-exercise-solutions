@@ -1,0 +1,32 @@
+#lang racket
+
+'(define (frame-count env) (length env))
+'(define (var-count frm-vars-or-vals) (mlength frm-vars-or-vals))
+'(define (frame-number lexical-address) (car lexical-address))
+'(define (displacement-number lexical-address) (cadr lexical-address))
+'(define (dig-into-frames rt-env frm-num)   
+   (if (> frm-num (frame-count rt-env))
+       (error "Uncorrect lexical infomation of frame number:" frm-num)
+       (list-ref rt-env frm-num)))
+'(define (dig-into-var-vals frme-vals dsp-num)   
+   (if (> dsp-num (var-count frme-vals))
+       (error "Uncorrect lexical infomationof displacement number:" dsp-num)
+       (mlist-ref frme-vals dsp-num)))
+'(define (drop-var-vals frme-vals dsp-num)   
+   (if (> dsp-num (var-count frme-vals))
+       (error "Uncorrect lexical infomationof displacement number:" dsp-num)
+       (mlist-tail frme-vals dsp-num)))
+'(define UNASSIGNED-SIGN '*unassigned*)
+
+'(define (lexical-address-lookup lxc-addr rt-env)
+   (let ((tgt-frame (dig-into-frames rt-env (frame-number lxc-addr))))
+     (let ((tgt-val (dig-into-var-vals (frame-values tgt-frame) (displacement-number lxc-addr))))
+       (if (eq? tgt-val UNASSIGNED-SIGN)
+           (error "Unassigned value :" (mlist-ref (frame-variables tgt-frame) (displacement-number lxc-addr)))
+           tgt-val))))
+
+'(define (lexical-address-set! lxc-addr val rt-env)
+   (let ((tgt-frame (dig-into-frames rt-env (frame-number lxc-addr))))
+     (let ((dropped-vals (drop-var-vals (frame-values tgt-frame) (displacement-number lxc-addr))))
+       (set-mcar! dropped-vals val))))
+       

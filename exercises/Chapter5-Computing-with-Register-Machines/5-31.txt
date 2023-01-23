@@ -1,0 +1,18 @@
+Superfluous or Necessary
+
+| -          | (f 'x 'y) | ((f) 'x 'y) | (f (g 'x) y) | (f (g 'x) 'y) |
+|------------|-----------|-------------|--------------|---------------|
+| parttern 1 | S         | N           | S            | S             |
+| parttern 2 | S         | S           | N            | N             |
+| parttern 3 | S         | S           | S            | S             |
+| parttern 4 | S         | S           | N            | N             |
+| parttern 5 | S         | S           | S            | S             |
+| parttern 6 | S         | S           | N            | N             |
+
+
+parttern 1	saves and restores the env register around the evaluation of the operator,
+parttern 2	saves and restores the env register around the evaluation of the first operand
+parttern 3	saves and restores the env register around the evaluation of the second operand
+parttern 4	saves and restores the argl register around the evaluation of the first operand
+parttern 5	saves and restores the argl register around the evaluation of the second operand
+parttern 6	saves and restores proc around the evaluation of the operand sequence
